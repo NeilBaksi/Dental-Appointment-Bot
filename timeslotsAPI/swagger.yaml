@@ -19,6 +19,28 @@ paths:
           description: OK
       tags:
         - Timeslots
+    post:
+      summary: Adds a new dentist with fresh timeslots
+      parameters:
+        - in: body
+          name: timeslot
+          description: The dentist to add
+          schema:
+            type: object
+            required:
+              - dentistID
+            properties:
+              dentistID:
+                type: integer
+      tags:
+        - Timeslots
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid ID supplied
+        '409':
+          description: Timeslot already exists
         
   '/timeslots/{dentistID}':
     get:

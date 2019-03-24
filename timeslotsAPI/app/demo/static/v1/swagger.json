@@ -23,6 +23,13 @@
         }, 
         "parameters": [
           {
+            "required": true, 
+            "minimum": 1, 
+            "type": "integer", 
+            "name": "dentistID", 
+            "in": "path"
+          }, 
+          {
             "schema": {
               "required": [
                 "startTime"
@@ -73,39 +80,39 @@
     }, 
     "/timeslots": {
       "post": {
-        "produces": [
-          "application/json"
+        "tags": [
+          "Timeslots"
         ], 
-        "summary": "Adds a timeslot", 
         "responses": {
           "200": {
             "description": "OK"
           }, 
+          "409": {
+            "description": "Timeslot already exists"
+          }, 
           "400": {
-            "description": "Invalid input"
+            "description": "Invalid ID supplied"
           }
         }, 
         "parameters": [
           {
             "schema": {
               "required": [
-                "date"
+                "dentistID"
               ], 
               "type": "object", 
               "properties": {
-                "date": {
-                  "type": "string"
+                "dentistID": {
+                  "type": "integer"
                 }
               }
             }, 
-            "description": "The timeslot to add", 
+            "description": "The dentist to add", 
             "name": "timeslot", 
             "in": "body"
           }
         ], 
-        "tags": [
-          "Timeslots"
-        ]
+        "summary": "Adds a new dentist with fresh timeslots"
       }, 
       "get": {
         "produces": [

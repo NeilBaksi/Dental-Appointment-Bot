@@ -54,13 +54,13 @@ definitions = {'definitions': {}, 'parameters': {}}
 
 validators = {
     ('timeslots_dentistID', 'POST'): {'json': {'required': ['startTime'], 'type': 'object', 'properties': {'startTime': {'type': 'integer'}}}},
-    ('timeslots', 'POST'): {'json': {'required': ['date'], 'type': 'object', 'properties': {'date': {'type': 'string'}}}},
+    ('timeslots', 'POST'): {'json': {'required': ['dentistID'], 'type': 'object', 'properties': {'dentistID': {'type': 'integer'}}}},
 }
 
 filters = {
     ('timeslots_dentistID', 'POST'): {200: {'headers': None, 'schema': None}, 409: {'headers': None, 'schema': None}, 400: {'headers': None, 'schema': None}},
     ('timeslots_dentistID', 'GET'): {200: {'headers': None, 'schema': None}, 400: {'headers': None, 'schema': None}, 404: {'headers': None, 'schema': None}},
-    ('timeslots', 'POST'): {200: {'headers': None, 'schema': None}, 400: {'headers': None, 'schema': None}},
+    ('timeslots', 'POST'): {200: {'headers': None, 'schema': None}, 409: {'headers': None, 'schema': None}, 400: {'headers': None, 'schema': None}},
     ('timeslots', 'GET'): {200: {'headers': None, 'schema': None}},
     ('timeslots_dentistID_timeslotID', 'GET'): {200: {'headers': None, 'schema': None}, 400: {'headers': None, 'schema': None}, 404: {'headers': None, 'schema': None}},
     ('timeslots_dentistID_timeslotID_cancel', 'PUT'): {200: {'headers': None, 'schema': None}, 400: {'headers': None, 'schema': None}, 404: {'headers': None, 'schema': None}},
