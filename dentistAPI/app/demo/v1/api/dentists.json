@@ -1,0 +1,22 @@
+{
+    "dentists": [
+        {
+            "location": "Syd", 
+            "id": 1, 
+            "name": "one", 
+            "spec": "Oral"
+        }, 
+        {
+            "location": "Syd", 
+            "id": 2, 
+            "name": "two", 
+            "spec": "General"
+        }, 
+        {
+            "location": "Syd", 
+            "id": 3, 
+            "name": "three", 
+            "spec": "Surgery"
+        }
+    ]
+}

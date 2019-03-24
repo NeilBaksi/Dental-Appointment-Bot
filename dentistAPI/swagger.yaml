@@ -1,0 +1,94 @@
+swagger: "2.0"
+info:
+  title: Dentist Information API
+  description: Service to handle Dentist information for a dental clinic
+  version: 1.0.0
+host: api.example.com
+basePath: /v1
+schemes:
+  - https
+  - http
+paths:
+  /dentists:
+    get:
+      summary: Returns a list of available dentists.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+      tags: 
+        - Dentist
+    post:
+      summary: Adds a dentist
+      parameters: 
+        - in: body
+          name: dentist
+          description: The dentist to add
+          schema:
+            type: object
+            required:
+              - name
+              - location
+              - specialisation
+            properties:
+              name:
+                type: string
+              location:
+                type: string
+              specialisation:
+                type: string
+      
+      tags: 
+        - Dentist
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+          
+
+  /dentists/{id}:
+    get:
+      summary: Returns information of a given dentist name
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          type: integer
+          minimum: 1
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Dentist not found"
+      tags: 
+        - Dentist
+        
+    delete:
+      summary: Deletes information of a given dentist name
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          type: integer
+          minimum: 1
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Invalid Name supplied"
+        404:
+          description: "Dentist not found"
+      tags: 
+        - Dentist
+        
+    

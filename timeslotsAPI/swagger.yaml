@@ -1,0 +1,144 @@
+swagger: '2.0'
+info:
+  title: Timeslots Information and Booking API
+  description: Service to handle timeslot information and bookings for a dental clinic
+  version: 1.0.0
+host: api.example.com
+basePath: /v1
+schemes:
+  - https
+  - http
+paths:
+  /timeslots:
+    get:
+      summary: Returns a list of available timeslots.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+      tags:
+        - Timeslots
+        
+  '/timeslots/{dentistID}':
+    get:
+      summary: Returns available timeslots of a given dentist ID
+      parameters:
+        - in: path
+          name: dentistID
+          required: true
+          type: integer
+          minimum: 1
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Timeslot not found
+      tags:
+        - Timeslots
+    post:
+      summary: Adds a new timeslot for a given dentist ID
+      parameters:
+        - in: path
+          name: dentistID
+          required: true
+          type: integer
+          minimum: 1
+        - in: body
+          name: timeslot
+          description: The timeslot to add
+          schema:
+            type: object
+            required:
+              - startTime
+            properties:
+              startTime:
+                type: integer
+      tags:
+        - Timeslots
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid ID supplied
+        '409':
+          description: Timeslot already exists
+  '/timeslots/{dentistID}/{timeslotID}':
+    get:
+      summary: Returns timeslot information of a given timeslot ID
+      parameters:
+        - in: path
+          name: dentistID
+          required: true
+          type: integer
+          minimum: 1
+        - in: path
+          name: timeslotID
+          required: true
+          type: integer
+          minimum: 1
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Timeslot not found
+      tags:
+        - Timeslots
+  '/timeslots/{dentistID}/{timeslotID}/reserve':
+    put:
+      summary: Reserves a timeslot of given timeslot ID for a given dentist ID
+      parameters:
+        - in: path
+          name: dentistID
+          required: true
+          type: integer
+          minimum: 1
+        - in: path
+          name: timeslotID
+          required: true
+          type: integer
+          minimum: 1
+      tags:
+        - Timeslots
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Timeslot not found
+  '/timeslots/{dentistID}/{timeslotID}/cancel':
+    put:
+      summary: Cancel a timeslot of given timeslot ID for a given dentist ID
+      parameters:
+        - in: path
+          name: dentistID
+          required: true
+          type: integer
+          minimum: 1
+        - in: path
+          name: timeslotID
+          required: true
+          type: integer
+          minimum: 1
+      tags:
+        - Timeslots
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Timeslot not found
