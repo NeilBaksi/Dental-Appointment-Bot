@@ -1,22 +1,22 @@
 {
     "dentists": [
         {
-            "location": "Syd", 
+            "location": "Rhodes", 
             "id": 1, 
-            "name": "one", 
-            "spec": "Oral"
+            "name": "Neil Baksi", 
+            "spec": "Paediatric Dentistry"
         }, 
         {
-            "location": "Syd", 
+            "location": "Castle Hill", 
             "id": 2, 
-            "name": "two", 
-            "spec": "General"
+            "name": "Justin Saade", 
+            "spec": "Oral Surgery"
         }, 
         {
-            "location": "Syd", 
+            "location": "Sydney", 
             "id": 3, 
-            "name": "three", 
-            "spec": "Surgery"
+            "name": "Shimona Rastogi", 
+            "spec": "Orthodontics"
         }
     ]
 }

@@ -1,0 +1,30 @@
+{
+  "info": {
+    "version": "1.0.0", 
+    "description": "Webhook to handle API calls", 
+    "title": "Webhook API"
+  }, 
+  "paths": {
+    "/webhook": {
+      "post": {
+        "produces": [
+          "application/json"
+        ], 
+        "summary": "Handles request from Dialogflow", 
+        "responses": {
+          "200": {
+            "description": "OK"
+          }, 
+          "405": {
+            "description": "Invalid input"
+          }
+        }, 
+        "tags": [
+          "Webhook"
+        ]
+      }
+    }
+  }, 
+  "basePath": "/v1", 
+  "swagger": "2.0"
+}

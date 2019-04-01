@@ -1,0 +1,31 @@
+{
+  "responseId": "e3858eee-cd3c-49c4-b6cf-03fd20baab8c",
+  "queryResult": {
+    "queryText": "i want to see neil",
+    "action": "get-time",
+    "parameters": {
+      "Number": "1"
+    },
+    "allRequiredParamsPresent": true,
+    "fulfillmentText": "Sure, he is available!",
+    "fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            "Sure, he is available!"
+          ]
+        }
+      }
+    ],
+    "intent": {
+      "name": "projects/comp9322-chatbot/agent/intents/1a76fe94-d84c-4f07-b55f-a1415af8d4d3",
+      "displayName": "doc-preference"
+    },
+    "intentDetectionConfidence": 1,
+    "languageCode": "en"
+  },
+  "originalDetectIntentRequest": {
+    "payload": {}
+  },
+  "session": "projects/comp9322-chatbot/agent/sessions/40e2a6cd-f0b0-89dd-54d4-a45b7fa16dfc"
+}
