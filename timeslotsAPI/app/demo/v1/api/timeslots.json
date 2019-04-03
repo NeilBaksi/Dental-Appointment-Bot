@@ -4,7 +4,7 @@
             "dentistID": 1, 
             "timeslots": [
                 {
-                    "booked": true, 
+                    "booked": false, 
                     "endTime": 9, 
                     "id": 1, 
                     "startTime": 8

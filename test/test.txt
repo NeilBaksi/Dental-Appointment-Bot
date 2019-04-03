@@ -1,31 +1,32 @@
 {
-  "responseId": "e3858eee-cd3c-49c4-b6cf-03fd20baab8c",
+  "responseId": "9b2fb6cd-146c-4390-9be4-7c3d78a5dfef",
   "queryResult": {
-    "queryText": "i want to see neil",
-    "action": "get-time",
-    "parameters": {
-      "Number": "1"
-    },
+    "queryText": "i want tos ee a doctor",
+    "action": "get-choice",
+    "parameters": {},
     "allRequiredParamsPresent": true,
-    "fulfillmentText": "Sure, he is available!",
+    "fulfillmentText": "Which Doctor would you like to book an appointment with? We have the following doctors available today:",
     "fulfillmentMessages": [
       {
         "text": {
           "text": [
-            "Sure, he is available!"
+            "Which Doctor would you like to book an appointment with? We have the following doctors available today:"
           ]
         }
       }
     ],
     "intent": {
-      "name": "projects/comp9322-chatbot/agent/intents/1a76fe94-d84c-4f07-b55f-a1415af8d4d3",
-      "displayName": "doc-preference"
+      "name": "projects/comp9322-chatbot/agent/intents/13aa5857-d842-4f86-a90c-55570333706e",
+      "displayName": "doc-choice"
     },
-    "intentDetectionConfidence": 1,
+    "intentDetectionConfidence": 0.5,
+    "diagnosticInfo": {
+      "webhook_latency_ms": 10000
+    },
     "languageCode": "en"
   },
-  "originalDetectIntentRequest": {
-    "payload": {}
-  },
-  "session": "projects/comp9322-chatbot/agent/sessions/40e2a6cd-f0b0-89dd-54d4-a45b7fa16dfc"
+  "webhookStatus": {
+    "code": 4,
+    "message": "Webhook call failed. Error: Request timeout."
+  }
 }
