@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 
@@ -14,4 +15,4 @@ def create_app():
     return app
 
 if __name__ == '__main__':
-    create_app().run(debug=True)
+    create_app().run(debug=True,port=5005, threaded=True)

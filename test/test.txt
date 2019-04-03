@@ -2,8 +2,10 @@
   "responseId": "9b2fb6cd-146c-4390-9be4-7c3d78a5dfef",
   "queryResult": {
     "queryText": "i want tos ee a doctor",
-    "action": "get-choice",
-    "parameters": {},
+    "action": "get-name",
+    "parameters": {
+      "Name": "1"
+    },
     "allRequiredParamsPresent": true,
     "fulfillmentText": "Which Doctor would you like to book an appointment with? We have the following doctors available today:",
     "fulfillmentMessages": [

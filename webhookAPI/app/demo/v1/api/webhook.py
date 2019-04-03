@@ -2,7 +2,7 @@
 from __future__ import absolute_import, print_function
 
 from flask import request, g
-from flask import make_response
+from flask import make_response, jsonify
 
 from . import Resource
 from .. import schemas
@@ -12,47 +12,50 @@ import requests
 import urllib
 
 ## ngrok http -subdomain=dentistapi 5001
-dentistUrl= "http://745acac2.ngrok.io/v1/dentists"
+dentistUrl= "http://26be13ab.ngrok.io/v1/dentists"
 ## ngrok http -subdomain=timeslotsapi 5000
-timeslotsUrl = "http://6dff4c83.ngrok.io/v1/timeslots"
+timeslotsUrl = "http://e22a00b2.ngrok.io/v1/timeslots"
 
 
 class Webhook(Resource):
+    global makeGetReq
+    global getChoice
+    global getNameID
+    global getFullName
+    global getNameInfo
+    global getAvail
+    global getTime
+    global getCancel
 
     def get(self):
         response = {
-            "fulfillmentText": "Neil Baksi ; Justin Saade ; Shimona Rastogi ; "
+            "test": "This is for the Webhook only. Only used for POST methods!"
         }
-        r = make_response(response)
-        r.headers['Content-Type'] = 'application/json'
-        return r
+        # r = make_response(response)
+        # r.headers['Content-Type'] = 'application/json'
+        return jsonify(response)
+    
+    def makeGetReq(baseurl):
+        res = urllib.urlopen(baseurl)
+        getReq = json.loads(res.read())
+        return getReq
 
-    def post(self):
-        req = request.get_json(silent=True, force=True)
-
-        print("Request:")
-        print(json.dumps(req, indent=4))
-
-        response = processRequest(req)
-
-        response = json.dumps(res, indent=4)
-        #print(res)
-        
-        r = make_response(response)
-        r.headers['Content-Type'] = 'application/json'
-        return r
-        
     def getChoice():
         url1 = dentistUrl
         dentistChoicesQuery = makeGetReq(url1)
         dents = ""
         for key in dentistChoicesQuery['dentists']:
             dents = dents + key['name'] + " ; "
-        res = dents
+        res = "Which Doctor would you like to book an appointment with? We have the following doctors available today: \n"+dents
         return res
 
+    def getFullName(name):
+        url2 = dentistUrl+"/"+name
+        dentistQuery = makeGetReq(url2)
+        return dentistQuery['name']
+
     # returns all available timeslots for a dentist
-    def getName(name):
+    def getNameID(name):
         #Got Dentist Details
         url2 = dentistUrl+"/"+name
         dentistQuery = makeGetReq(url2)
@@ -64,22 +67,71 @@ class Webhook(Resource):
         for key in dentTimeslotsQuery['timeslots']:
             if (key['booked']== False):
                 times = times + str(key['startTime']) + " to " + str(key['endTime']) + " ; " 
-        res = times
+        res = "Dr "+ getFullName(name)+" is available at : \n" + times
         return res
+
+    # returns info for a dentist
+    def getNameInfo(id):
+        #Got Dentist Details
+        url2 = dentistUrl+"/"+id
+        dentistQuery = makeGetReq(url2)
+        info = "Name: "+ dentistQuery['name'] + "; Specialization: " + dentistQuery['spec'] + "; Location: " +dentistQuery['location'] 
+        res = info
+        return res
+    
+    def getAvail(name,startTime):
+        time = 0  
+        url3 = timeslotsUrl+"/"+name
+        dentTimeslotsQuery = makeGetReq(url3)
+        for key2 in dentTimeslotsQuery['timeslots']:
+            if startTime == key2['startTime']:
+                time = key2['id']
+        #Get one specific timeslot
+        url4 = timeslotsUrl+"/"+name+"/"+str(time)
+        timeslotQuery = makeGetReq(url4)
+        try:
+            if(timeslotQuery['message'] != None):
+                res = "Invalid Timeslot. Please Choose a valid Timeslot"
+                resAdd = getNameID(name)
+                res = res +"\n"+ "These are the available timeslots : \n"+ resAdd
+                return res
+        except:
+            pass
+
+        if (timeslotQuery['timeslot']['booked'] == True):
+            res = "This appointment slot is unavailable."
+            resAdd = getNameID(name)
+            res = res +"\n"+ "These are the available timeslots : \n"+ resAdd
+            return res
+        else:
+            res = "Yes, this timeslot is available."
+            resAdd = getNameID(name)
+            res = res +"\n"+ "These are all the available timeslots : \n"+ resAdd
+            return res
+
 
     def getTime(name, startTime):
         time = 0  
         url3 = timeslotsUrl+"/"+name
         dentTimeslotsQuery = makeGetReq(url3)
         for key2 in dentTimeslotsQuery['timeslots']:
-            if startTime == str(key2['startTime']):
+            if startTime == key2['startTime']:
                 time = key2['id']
         #Get one specific timeslot
         url4 = timeslotsUrl+"/"+name+"/"+str(time)
         timeslotQuery = makeGetReq(url4)
+        try:
+            if(timeslotQuery['message'] != None):
+                res = "Invalid Timeslot. Please Choose a valid Timeslot"
+                resAdd = getNameID(name)
+                res = res +"\n"+ "These are the available timeslots : \n"+ resAdd
+                return res
+        except:
+            pass
+
         if (timeslotQuery['timeslot']['booked'] == True):
             res = "This appointment slot is unavailable. Please choose another timeslot!"
-            resAdd = getName(name)
+            resAdd = getNameID(name)
             res = res +"\n"+ "These are the available timeslots : \n"+ resAdd
             return res
         
@@ -89,8 +141,9 @@ class Webhook(Resource):
         
         #install requests and do a put call to reserve the booking
         r = requests.put(url4+"/reserve")
-        res = "Your appointment has been made with Dr " +name+ " at " + str(timeslotQuery['timeslot']['startTime']) + \
-                " till " + str(timeslotQuery['timeslot']['endTime']) + "  today."
+        fullname = getFullName(name)
+        res = "Your appointment has been made with Dr " +fullname+ " at " + str(timeslotQuery['timeslot']['startTime']) + \
+                " till " + str(timeslotQuery['timeslot']['endTime']) + "  today. Would that be all for today?"
         
         return res
 
@@ -101,34 +154,56 @@ class Webhook(Resource):
         url =f.read()
         timeslotQuery = makeGetReq(url)
         r = requests.put(url+"/cancel")
-        res = "Your appointment with Dr " +name+ " at " + str(timeslotQuery['timeslot']['startTime']) + \
-                " till " + str(timeslotQuery['timeslot']['endTime']) + "  today has been cancelled. Have a nice day!"
+        fullname = getFullName(name)
+        res = "Your appointment with Dr " +fullname+ " at " + str(timeslotQuery['timeslot']['startTime']) + \
+                " till " + str(timeslotQuery['timeslot']['endTime']) + "  today has been cancelled. Would that be all for today?"
+        
+        return res
 
-    def processRequest(req):
+
+    def post(self):
+        req = request.get_json(silent=True, force=True)
+
+        # print("Request:")
+        print(req.get("queryResult").get("action"))
 
         if req.get("queryResult").get("action") == "get-choice":
             res = getChoice()
 
         if req.get("queryResult").get("action") == "get-name":
             f=open("./name.txt", "w+")
-            name = req.get("queryResult").get("parameters").get("Name")
-            res = getName(name)
+            name = req.get("queryResult").get("parameters").get("name")
+            res = getNameID(name)
             f.write(name)
             f.close
-        
+
+        if req.get("queryResult").get("action") == "get-info":
+            name = req.get("queryResult").get("parameters").get("name")
+            res = getNameInfo(name)
+            
+        if req.get("queryResult").get("action") == "get-avail":
+            name = req.get("queryResult").get("parameters").get("name")
+            startTime = req.get("queryResult").get("parameters").get("number")
+            res = getAvail(name,int(startTime))
+            
         if req.get("queryResult").get("action") == "get-time":
             #Got Dentist Timeslot Details
             f=open("./name.txt", "r")
-            contents =f.read()
-            name = contents
-            startTime = req.get("queryResult").get("parameters").get("Number")
-            res = getTime(name,startTime)
-            
+            name =f.read()
+            startTime = req.get("queryResult").get("parameters").get("number")
+            res = getTime(name,int(startTime))
+
+        if req.get("queryResult").get("action") == "time-pref":
+            os.remove("./name.txt")
+            os.remove("./url.txt")
+            res = "Thank you! See you soon! :D" 
+        
         ## check everywhere , if there is anothing booked, store its name and id and make url
         if req.get("queryResult").get("action") == "cancel":
             res = getCancel()
+            os.remove("./name.txt")
+            os.remove("./url.txt")
 
-        return {
-        "fulfillmentText": res
-        }
+        return jsonify({"fulfillmentText": res})
+
     

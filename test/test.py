@@ -4,9 +4,9 @@ import requests
 import urllib
 
 ## ngrok http -subdomain=dentistapi 5001
-dentistUrl= "http://745acac2.ngrok.io/v1/dentists"
+dentistUrl= "http://26be13ab.ngrok.io/v1/dentists"
 ## ngrok http -subdomain=timeslotsapi 5000
-timeslotsUrl = "http://6dff4c83.ngrok.io/v1/timeslots"
+timeslotsUrl = "http://e22a00b2.ngrok.io/v1/timeslots"
 
 with open('./test.txt') as json_file:  
     data = json.load(json_file)
@@ -30,6 +30,7 @@ def getName(name):
     #Got Dentist Details
     url2 = dentistUrl+"/"+name
     dentistQuery = makeGetReq(url2)
+    # print dentistQuery['name']
     #All timeslots of a dentist
     url3 = timeslotsUrl+"/"+name
     dentTimeslotsQuery = makeGetReq(url3)
