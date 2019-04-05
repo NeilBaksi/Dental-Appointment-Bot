@@ -12,9 +12,9 @@ import requests
 import urllib
 
 ## ngrok http -subdomain=dentistapi 5001
-dentistUrl= "http://127.0.0.1:5001/v1/dentists"
+dentistUrl= "http://192.168.99.100:9999/v1/dentists"
 ## ngrok http -subdomain=timeslotsapi 5000
-timeslotsUrl = "http://127.0.0.1:5002/v1/timeslots"
+timeslotsUrl = "http://192.168.99.100:9998/v1/timeslots"
 
 
 class Webhook(Resource):

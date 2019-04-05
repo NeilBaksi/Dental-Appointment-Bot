@@ -15,7 +15,7 @@ class TimeslotsDentistidTimeslotid(Resource):
         if timeslotID == 0:
             return make_response(jsonify({"message": "Timeslot not found.", "id": timeslotID}), 404)
 
-        with open('/mnt/c/Users/snb19/Downloads/COMP9322-master/9322Ass1/timeslotsAPI/app/demo/v1/api/timeslots.json') as json_data:
+        with open(sys.path[0]+'/v1/api/timeslots.json') as json_data:
             d = json.load(json_data)
             var = dentistID - 1
             var2 = timeslotID -1

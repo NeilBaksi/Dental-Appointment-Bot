@@ -9,14 +9,14 @@ from .. import schemas
 
 
 class Timeslots(Resource):
-
     def get(self):
-        with open('/mnt/c/Users/snb19/Downloads/COMP9322-master/9322Ass1/timeslotsAPI/app/demo/v1/api/timeslots.json') as json_data:
+        filename = sys.path[0]+'/v1/api/timeslots.json'
+        with open(filename) as json_data:
             d = json.load(json_data)
         return jsonify({"timeslots":d['timeslots']})
 
     def post(self):
-        with open('/mnt/c/Users/snb19/Downloads/COMP9322-master/9322Ass1/timeslotsAPI/app/demo/v1/api/timeslots.json') as json_data:
+        with open(filename) as json_data:
             d = json.load(json_data)
         newDentist = {
             "dentistID": g.json['dentistID'],
@@ -78,8 +78,8 @@ class Timeslots(Resource):
             ]
         }
         d['timeslots'].append(newDentist)
-
-        with open("/mnt/c/Users/snb19/Downloads/COMP9322-master/9322Ass1/dentistAPI/app/demo/v1/api/timeslots.json", "w") as jsonFile:
+        filename = sys.path[0]+'/v1/api/timeslots.json'
+        with open(filename, "w") as jsonFile:
             json.dump(d, jsonFile, indent=4)
     
         return jsonify({"timeslots":d['timeslots']})

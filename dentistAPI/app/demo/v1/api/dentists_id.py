@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, print_function
-import json
+import json, sys, os
 from flask import request, g, jsonify, make_response
 
 from . import Resource
@@ -12,7 +12,7 @@ class DentistsId(Resource):
     def get(self, id):
         if id == 0:
             return make_response(jsonify({"message": "Dentist not found.", "id": id}), 404)
-        with open('/mnt/c/Users/snb19/Downloads/COMP9322-master/9322Ass1/dentistAPI/app/demo/v1/api/dentists.json') as json_data:
+        with open(sys.path[0]+'/v1/api/dentists.json') as json_data:
             d = json.load(json_data)
             var = id-1
             try:

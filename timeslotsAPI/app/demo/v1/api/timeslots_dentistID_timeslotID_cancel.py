@@ -6,15 +6,17 @@ from . import Resource
 from .. import schemas
 
 
+
 class TimeslotsDentistidTimeslotidCancel(Resource):
 
     def put(self, dentistID, timeslotID):
+        filename = sys.path[0]+'/v1/api/timeslots.json'
         if dentistID == 0:
             return make_response(jsonify({"message": "Dentist not found.", "id": dentistID}), 404)
         if timeslotID == 0:
             return make_response(jsonify({"message": "Timeslot not found.", "id": timeslotID}), 404)
 
-        with open('/mnt/c/Users/snb19/Downloads/COMP9322-master/9322Ass1/timeslotsAPI/app/demo/v1/api/timeslots.json') as json_data:
+        with open(filename) as json_data:
             d = json.load(json_data)
             var = dentistID - 1
             var2 = timeslotID -1        
@@ -29,7 +31,7 @@ class TimeslotsDentistidTimeslotidCancel(Resource):
                 timeslot = ""
             if timeslot != "":
                 d['timeslots'][var]['timeslots'][var2]['booked'] = False
-                with open("/mnt/c/Users/snb19/Downloads/COMP9322-master/9322Ass1/timeslotsAPI/app/demo/v1/api/timeslots.json", "w") as jsonFile:
+                with open(filename, "w") as jsonFile:
                     json.dump(d, jsonFile, indent=4)
                 return jsonify(d['timeslots'][var]['timeslots'][var2])
             else:
