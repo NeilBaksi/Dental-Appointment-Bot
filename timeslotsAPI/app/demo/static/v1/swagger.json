@@ -122,6 +122,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          }, 
+          "404": {
+            "description": "Not Found"
           }
         }, 
         "tags": [
@@ -131,21 +134,7 @@
     }, 
     "/timeslots/{dentistID}/{timeslotID}": {
       "get": {
-        "tags": [
-          "Timeslots"
-        ], 
-        "summary": "Returns timeslot information of a given timeslot ID", 
-        "responses": {
-          "200": {
-            "description": "OK"
-          }, 
-          "404": {
-            "description": "Timeslot not found"
-          }, 
-          "400": {
-            "description": "Invalid ID supplied"
-          }
-        }, 
+        "description": "timeslotID is not the same as startTime. timeslotID gives the actual id of the booking from the start of the day e.g. appointment at 8 makes timeslotID 1 as it is the 1st booking of the day.", 
         "parameters": [
           {
             "required": true, 
@@ -162,9 +151,24 @@
             "in": "path"
           }
         ], 
+        "tags": [
+          "Timeslots"
+        ], 
         "produces": [
           "application/json"
-        ]
+        ], 
+        "summary": "Returns timeslot information of a given timeslot ID", 
+        "responses": {
+          "200": {
+            "description": "OK"
+          }, 
+          "404": {
+            "description": "Timeslot not found"
+          }, 
+          "400": {
+            "description": "Invalid ID supplied"
+          }
+        }
       }
     }, 
     "/timeslots/{dentistID}/{timeslotID}/cancel": {
@@ -186,18 +190,20 @@
         }, 
         "parameters": [
           {
+            "description": "ID of the dentist to be booked", 
             "required": true, 
             "minimum": 1, 
+            "in": "path", 
             "type": "integer", 
-            "name": "dentistID", 
-            "in": "path"
+            "name": "dentistID"
           }, 
           {
+            "description": "timeslotID of the time the dentist is to be booked", 
             "required": true, 
             "minimum": 1, 
+            "in": "path", 
             "type": "integer", 
-            "name": "timeslotID", 
-            "in": "path"
+            "name": "timeslotID"
           }
         ], 
         "tags": [
@@ -224,18 +230,20 @@
         }, 
         "parameters": [
           {
+            "description": "ID of the dentist to be booked", 
             "required": true, 
             "minimum": 1, 
+            "in": "path", 
             "type": "integer", 
-            "name": "dentistID", 
-            "in": "path"
+            "name": "dentistID"
           }, 
           {
+            "description": "timeslotID of the time the dentist is to be booked", 
             "required": true, 
             "minimum": 1, 
+            "in": "path", 
             "type": "integer", 
-            "name": "timeslotID", 
-            "in": "path"
+            "name": "timeslotID"
           }
         ], 
         "tags": [

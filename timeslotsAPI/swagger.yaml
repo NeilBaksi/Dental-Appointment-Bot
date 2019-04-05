@@ -3,7 +3,7 @@ info:
   title: Timeslots Information and Booking API
   description: Service to handle timeslot information and bookings for a dental clinic
   version: 1.0.0
-host: api.example.com
+host: 192.168.99.100:9998
 basePath: /v1
 schemes:
   - https
@@ -17,6 +17,8 @@ paths:
       responses:
         '200':
           description: OK
+        '404':
+          description: Not Found
       tags:
         - Timeslots
     post:
@@ -92,6 +94,7 @@ paths:
   '/timeslots/{dentistID}/{timeslotID}':
     get:
       summary: Returns timeslot information of a given timeslot ID
+      description: timeslotID is not the same as startTime. timeslotID gives the actual id of the booking from the start of the day e.g. appointment at 8 makes timeslotID 1 as it is the 1st booking of the day.
       parameters:
         - in: path
           name: dentistID
@@ -122,9 +125,11 @@ paths:
           name: dentistID
           required: true
           type: integer
+          description: ID of the dentist to be booked
           minimum: 1
         - in: path
           name: timeslotID
+          description: timeslotID of the time the dentist is to be booked
           required: true
           type: integer
           minimum: 1
@@ -147,9 +152,11 @@ paths:
           name: dentistID
           required: true
           type: integer
+          description: ID of the dentist to be booked
           minimum: 1
         - in: path
           name: timeslotID
+          description: timeslotID of the time the dentist is to be booked
           required: true
           type: integer
           minimum: 1

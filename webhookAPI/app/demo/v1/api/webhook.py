@@ -11,11 +11,8 @@ import os
 import requests 
 import urllib
 
-## ngrok http -subdomain=dentistapi 5001
 dentistUrl= "http://192.168.99.100:9999/v1/dentists"
-## ngrok http -subdomain=timeslotsapi 5000
 timeslotsUrl = "http://192.168.99.100:9998/v1/timeslots"
-
 
 class Webhook(Resource):
     global makeGetReq
