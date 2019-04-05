@@ -12,9 +12,9 @@ import requests
 import urllib
 
 ## ngrok http -subdomain=dentistapi 5001
-dentistUrl= "http://26be13ab.ngrok.io/v1/dentists"
+dentistUrl= "http://127.0.0.1:5001/v1/dentists"
 ## ngrok http -subdomain=timeslotsapi 5000
-timeslotsUrl = "http://e22a00b2.ngrok.io/v1/timeslots"
+timeslotsUrl = "http://127.0.0.1:5002/v1/timeslots"
 
 
 class Webhook(Resource):
@@ -198,7 +198,7 @@ class Webhook(Resource):
             os.remove("./url.txt")
             res = "Thank you! See you soon! :D" 
         
-        ## check everywhere , if there is anothing booked, store its name and id and make url
+        # taking booking url and change the end point to cancel it. API handles the rest
         if req.get("queryResult").get("action") == "cancel":
             res = getCancel()
             os.remove("./name.txt")
